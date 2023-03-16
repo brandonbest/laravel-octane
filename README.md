@@ -16,9 +16,14 @@ docker login -u <username>
 docker build -t brandondbest/laravel-octane .
 ```
 
-Tag the image:
+Tag the image to the top level:
 ```
 docker build -t brandondbest/laravel-octane:8 .
+```
+
+Tag the image to a lower version:
+```
+docker build -t brandondbest/laravel-octane:8.1 .
 ```
 
 ## Push the Image
@@ -29,7 +34,8 @@ docker push brandondbest/laravel-octane
 
 Push a tagged Image:
 ```
-docker push brandondbest/laravel-octane:8
+docker push brandondbest/laravel-octane:8;
+docker push brandondbest/laravel-octane:8.1;
 ```
 
 ## Create the Image for Additional Processors

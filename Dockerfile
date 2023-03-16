@@ -1,4 +1,4 @@
-FROM php:8.1-alpine
+FROM php:8.2-alpine
 
 ENV WEB_DOCUMENT_ROOT "/app/public"
 WORKDIR /app
