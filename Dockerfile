@@ -43,6 +43,7 @@ ENV PHP_DISMOD=ioncube,mongodb
 # Install Opcache
 RUN docker-php-ext-install opcache
 COPY ./etc/opcache/opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+COPY ./etc/php/www.conf /usr/local/etc/php-fpm.d/www.conf
 
 # Install Nginx
 RUN apk add nginx \
