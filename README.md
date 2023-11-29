@@ -36,6 +36,7 @@ Push a tagged Image:
 ```
 docker push brandondbest/laravel-octane:8;
 docker push brandondbest/laravel-octane:8.1;
+docker push brandondbest/laravel-octane:8.2;
 ```
 
 ## Create the Image for Additional Processors
