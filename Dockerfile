@@ -1,4 +1,4 @@
-FROM php:8.1-alpine
+FROM php:8.2-alpine
 
 ENV WEB_DOCUMENT_ROOT "/app/public"
 WORKDIR /app
@@ -59,19 +59,34 @@ RUN apk add nginx \
 ####################################
 
 RUN \
-    apk add --no-cache libstdc++ libpq && \
-    apk add --no-cache --virtual .build-deps $PHPIZE_DEPS curl-dev openssl-dev pcre-dev pcre2-dev zlib-dev && \
-    docker-php-ext-install sockets && \
+    apk add --no-cache libstdc++ libpq
+
+RUN \
+    apk add --no-cache --virtual .build-deps $PHPIZE_DEPS curl-dev openssl-dev pcre-dev pcre2-dev zlib-dev
+
+RUN \
+    apk add --no-cache linux-headers && \
+    docker-php-ext-install sockets
+
+RUN \
     docker-php-source extract && \
-    mkdir /usr/src/php/ext/swoole && \
+    mkdir /usr/src/php/ext/swoole
+
+RUN \
     curl -sfL https://github.com/swoole/swoole-src/archive/master.tar.gz -o swoole.tar.gz && \
-    tar xfz swoole.tar.gz --strip-components=1 -C /usr/src/php/ext/swoole && \
+    tar xfz swoole.tar.gz --strip-components=1 -C /usr/src/php/ext/swoole
+
+RUN \
     docker-php-ext-configure swoole \
-        --enable-http2        \
+#        --enable-http2        \
+#        --enable-swoole-json  \
         --enable-mysqlnd      \
         --enable-swoole-pgsql \
         --enable-openssl      \
-        --enable-sockets --enable-swoole-curl --enable-swoole-json && \
+        --enable-sockets \
+        --enable-swoole-curl
+
+RUN \
     docker-php-ext-install -j$(nproc) swoole && \
     rm -f swoole.tar.gz $HOME/.composer/*-old.phar && \
     docker-php-source delete && \
